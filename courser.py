@@ -1,4 +1,4 @@
-from random import randint, random
+from random import randint, random, choice
 
 
 class Course(object):
@@ -23,33 +23,39 @@ class Course(object):
 
     def __init__(self, name='', duration=0):
         self.theme = self.choice_theme()
-        self.name = self.choice_name(self.theme+'courser_names.txt')
+        self.name = self.choice_name('data/'+self.theme+'course_names.txt')
         self.lessons_count = randint(4, 16)
         self.lesson_duraion_type = randint(0, 2)
         self.lessons = self.create_lessons()
         self.type = 'Course'
     
-    def choice_theme(self, filename='courser_themes.txt'):
+    def choice_theme(self, filename='themes.txt'):
         with open(filename, 'r', encoding='utf-8') as reader:
             course_themes_list = []
             for theme in reader:
                 course_themes_list.append(theme.strip('\n'))
-        return random.choice(course_themes_list)
+        return choice(course_themes_list)
 
     def choice_name(self, filename):
         with open(filename, 'r', encoding='utf-8') as reader:
             course_names_list = []
             for course in reader:
                 course_names_list.append(course.strip('\n'))
-        return random.choice(course_names_list)
+        return choice(course_names_list)
 
     def create_lessons(self):
         types = ['text', 'video', 'quiz']
         tmp_lessons = []
         for i in range(self.lessons_count):
-            difficulty = randint(0, 2)
+            difficulty = randint(0, 4)
+            if difficulty == 4:
+                difficulty = 2
+            elif difficulty == 0:
+                difficulty = 0
+            else:
+                difficulty = 1
             tmp_lessons.append({
-                'number': 0,
+                'number': i+1,
                 'type': types[difficulty],
                 'difficulty': difficulty+2,
                 'duration': self.duration()
@@ -68,7 +74,7 @@ class Course(object):
         return duration
 
     def __repr__(self):
-        return f' type: {self.type}\n name: {self.name}\n lessons_count: {self.lessons_count}\n lesson_duraion_type (minutes): {self.lesson_duraion_type}\n difficulty: {self.difficulty}\n'
+        return f' type: {self.type} | theme: {self.theme} | name: {self.name} | lessons_count: {self.lessons_count} | lesson_duraion_type: {self.lesson_duraion_type}\n'
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-from random import randint, random
+from random import randint, random, choice
 
 
 class Manual(object):
@@ -10,27 +10,27 @@ class Manual(object):
 
     def __init__(self, name='', duration=0):
         self.theme = self.choice_theme()
-        self.name = self.choice_name(str(self.theme)+'manualer_names.txt')
+        self.name = self.choice_name('data/'+self.theme+'manual_names.txt')
         self.duration = randint(10, 20)
         self.difficulty = 1
         self.type = 'Manual'
     
-    def choice_theme(self, filename='manualer_themes.txt'):
+    def choice_theme(self, filename='themes.txt'):
         with open(filename, 'r', encoding='utf-8') as reader:
             manual_themes_list = []
             for theme in reader:
                 manual_themes_list.append(theme.strip('\n'))
-        return random.choice(manual_themes_list)
+        return choice(manual_themes_list)
 
     def choice_name(self, filename):
         with open(filename, 'r', encoding='utf-8') as reader:
             manual_names_list = []
             for manual in reader:
                 manual_names_list.append(manual.strip('\n'))
-        self.name = random.choice(manual_names_list)
+        return choice(manual_names_list)
 
     def __repr__(self):
-        return f' type: {self.type}\n name: {self.name}\n duration (minutes): {self.duration}\n difficulty: {self.difficulty}\n'
+        return f' type: {self.type} | theme: {self.theme} | name: {self.name} | duration (minutes): {self.duration} | difficulty: {self.difficulty}\n'
 
 
 if __name__ == '__main__':
