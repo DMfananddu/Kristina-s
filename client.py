@@ -31,7 +31,7 @@ class Client(object):
         if not subs:
             self.sub_list_len = randint(0,3)
             for i in range(len(self.sub_list_len)):
-                self.current_subscriptions.append(Subscription(choice(self.current_themes), randint(0, 1, 2, 3)))
+                self.current_subscriptions.append(Subscription(choice(self.current_themes), randint(0, 3)))
 
         self.id = hash(randint(0, 10000000) + randint(0, 10000000))
         self.statistics = {
@@ -52,4 +52,4 @@ class Client(object):
             f' \n current_subscriptions: {[[sub.type, sub.theme, sub.name] for sub in self.current_subscriptions]}\n'
 
 if __name__ == '__main__':
-    print('Client.py')
+    print('client.py')
