@@ -1,5 +1,6 @@
 from random import choice, randint
-from resource import Subscription
+from contenter import Content
+
 
 class Client(object):
     """
@@ -18,7 +19,7 @@ class Client(object):
             который пользователь посмотрел последним, начинает смотреть следующий урок
     """
 
-    def __init__(self, themes, subs=[]):
+    def __init__(self, themes, subs=[], content=[]):
         if len(themes) > 3:
             self.current_themes = []
             while len(self.current_themes) < 3:
@@ -28,10 +29,10 @@ class Client(object):
         else:
             self.current_themes = themes
 
-        if not subs:
+        if not subs and content != []:
             self.sub_list_len = randint(0,3)
             for i in range(len(self.sub_list_len)):
-                self.current_subscriptions.append(Subscription(choice(self.current_themes), randint(0, 3)))
+                self.current_subscriptions.append(choice(content))
 
         self.id = hash(randint(0, 10000000) + randint(0, 10000000))
         self.statistics = {
@@ -52,4 +53,4 @@ class Client(object):
             f' \n current_subscriptions: {[[sub.type, sub.theme, sub.name] for sub in self.current_subscriptions]}\n'
 
 if __name__ == '__main__':
-    print('client.py')
+    print('clienter.py')
