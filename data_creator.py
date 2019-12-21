@@ -1,6 +1,6 @@
 from random import randint
 
-with open('data/themes.txt', 'r', encoding='utf-8') as reader:
+with open('themes.txt', 'r', encoding='utf-8') as reader:
     for theme in reader:
         theme = theme.strip('\n')
         f = open('data/'+theme+'course_names.txt', 'w', encoding='utf-8')
@@ -8,7 +8,7 @@ with open('data/themes.txt', 'r', encoding='utf-8') as reader:
         for i in range(num):
             f.write(f'{theme}name{i+1}\n')
         f.close()
-with open('data/themes.txt', 'r', encoding='utf-8') as reader:
+with open('themes.txt', 'r', encoding='utf-8') as reader:
     for theme in reader:
         theme = theme.strip('\n')
         f = open('data/'+theme+'manual_names.txt', 'w', encoding='utf-8')

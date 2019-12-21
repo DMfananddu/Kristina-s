@@ -15,7 +15,7 @@ class Manual(object):
         self.difficulty = 1
         self.type = 'Manual'
     
-    def choice_theme(self, filename='data/themes.txt'):
+    def choice_theme(self, filename='themes.txt'):
         with open(filename, 'r', encoding='utf-8') as reader:
             manual_themes_list = []
             for theme in reader:

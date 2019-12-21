@@ -29,7 +29,7 @@ class Course(object):
         self.lessons = self.create_lessons()
         self.type = 'Course'
     
-    def choice_theme(self, filename='data/themes.txt'):
+    def choice_theme(self, filename='themes.txt'):
         with open(filename, 'r', encoding='utf-8') as reader:
             course_themes_list = []
             for theme in reader:
