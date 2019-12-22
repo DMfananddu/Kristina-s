@@ -28,11 +28,23 @@ class Client(object):
                     self.current_themes.append(tmp_theme)
         else:
             self.current_themes = themes
+        
+        self.sub_list_len = 0
+        self.current_subscriptions = []
 
         if not subs and content != []:
             self.sub_list_len = randint(0,3)
             for i in range(len(self.sub_list_len)):
-                self.current_subscriptions.append(choice(content))
+                tmp_cont_type = randint(0, 1)
+                if tmp_cont_type == 0:
+                    tmp_cont_number = randint(0, len(content.manual_list))
+                    tmp_cont = content.manual_list[tmp_cont_number]
+                else:
+                    tmp_cont_number = randint(0, len(content.course_list))
+                    tmp_cont = content.course_list[tmp_cont_number]
+                    tmp_cont = [randint(0, len(tmp_cont)-1), tmp_cont]
+
+                self.current_subscriptions.append(tmp_cont)
 
         self.id = hash(randint(0, 10000000) + randint(0, 10000000))
         self.statistics = {
@@ -40,6 +52,7 @@ class Client(object):
             'went to portal': None,
             'out of portal': None,
             'spend time': None,
+            'content': None,
             'studied resources': [{
                 'resource': None,
                 'start time': None,
