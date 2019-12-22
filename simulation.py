@@ -39,7 +39,7 @@ class ClientSim(object):
                 if self.chosen_content.type == 'Course':
                     self.client.statistics['studiedResources'].append({
                         'resource': self.chosen_content,
-                        'lessonNumber': lesson_num,
+                        'lessonNumber': lesson_num+1,
                         'ST': st_time,
                         'ET': st_time + self.chosen_content.lessons[lesson_num]['duration']
                     })
@@ -54,6 +54,7 @@ class ClientSim(object):
                     })
                     self.client.StartTime += self.chosen_content.duration
                     yield self.env.timeout(self.chosen_content.difficulty)
+            self.client.statistics['outOfPortal'] = self.client.StartTime
             
 
     def new_now(self, now):
