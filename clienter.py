@@ -21,6 +21,9 @@ class Client(object):
 
     def __init__(self, themes, content=[]):
         self.id = hash(randint(0, 10000000) + randint(0, 10000000))
+        
+        self.MPST = randint(1, 48)*30
+        self.StartTime = None
         self.current_themes = []
         while len(self.current_themes) < 3:
             tmp_theme = choice(themes)
@@ -40,15 +43,14 @@ class Client(object):
                         if content.manual_list[i].theme in self.current_themes:
                             tmp_manual_list.append(content.manual_list[i])
                     tmp_cont_number = randint(0, len(tmp_manual_list)-1)
-                    tmp_cont = tmp_manual_list[tmp_cont_number]
+                    tmp_cont = [tmp_manual_list[tmp_cont_number], -1]
                 else:
                     tmp_course_list = []
                     for i in range(len(content.course_list)):
                         if content.course_list[i].theme in self.current_themes:
                             tmp_course_list.append(content.course_list[i])
                     tmp_cont_number = randint(0, len(tmp_course_list)-1)
-                    tmp_cont = tmp_course_list[tmp_cont_number]
-                    tmp_cont = [tmp_cont, randint(0, len(tmp_cont.lessons)-1)]
+                    tmp_cont = [tmp_course_list[tmp_cont_number], randint(0, tmp_course_list[tmp_cont_number].lessons_count-1)]
                 tmp_content.append(tmp_cont)
 
             self.current_subscriptions = tmp_content
@@ -56,11 +58,13 @@ class Client(object):
         self.statistics = {
             'ID': self.id,
             'wentToPortal': None,
+            'watchedContent': False,
             'outOfPortal': None,
-            'MPST': randint(1, 48) * 30,
+            'MPST': self.MPST,
             'content': None,
             'studiedResources': [{
                 'resource': None,
+                'lessonNumber': None,
                 'ST': None,
                 'ET': None
             }], # ресурсы, которые были полностью изучены
