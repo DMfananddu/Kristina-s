@@ -19,8 +19,7 @@ def get_general_statistic(statistics):
         if statistics[i]['watchedContent'] is True:
             statistic_values['Clients amount'] +=1
             statistic_values['Average time in queue'] += \
-                    int(statistics[i]['studiedResources'][0]['ST'] - \
-                    statistics[i]['wentToPortal'])
+                    int(statistics[i]['studiedResources'][0]['ST'])
         else:
             statistic_values['Clients gone'] +=1
     statistic_values['Average time in queue'] //= statistic_values['Clients amount']
@@ -32,7 +31,7 @@ def time_in_queue(statistics):
     x_user = []
     for i in range(len(statistics)):
         if statistics[i]['watchedContent'] is True:
-            y_user.append(int(statistics[i]['studiedResources'][0]['ST'] - statistics[i]['wentToPortal']))
+            y_user.append(int(statistics[i]['studiedResources'][0]['ST']))
             x_user.append(i)
 
     fig, ax = plt.subplots()
