@@ -29,7 +29,7 @@ class ClientSim(object):
             # self.client.statistics['content'] = self.content
             yield req
             yield self.env.process(self.watch_content())
-            # print(self.client.statistics['studiedResources'])
+            print(self.client.statistics['studiedResources'])
 
     def watch_content(self):
         tmp_cont = self.choice_content()

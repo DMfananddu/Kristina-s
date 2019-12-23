@@ -8,11 +8,53 @@ def get_statistics():
     return data
 
 
+def popular_themes(statistics):
+    x = []
+    y = []
+    for i in range(len(statistics)):
+        client_res = statistics[i]['studiedResources']
+        for res in client_res:
+            if res['resource'].theme not in x:
+                x.append(res['resource'].theme)
+                y.append(1)
+            else:
+                y[x.index(res['resource'].theme)] += 1
+    fig = plt.figure(figsize=(8, 6))
+    plt.bar(x, y)
+    plt.xticks(rotation=90)
+    plt.ylabel('Кол-во просмотренного контента')
+    plt.title('Количество просмотренного контента по Темам')
+    plt.show()
+
+
+def popular_lesson_types(statistics):
+    x = ['Справочник', 'Текст', 'Видео', 'Тест']
+    y = [0, 0, 0, 0]
+    for i in range(len(statistics)):
+        client_res = statistics[i]['studiedResources']
+        for res in client_res:
+            if res['resource'].type == 'Manual':
+                y[0] += 1
+            else:
+                if res['lessonDifficulty'] == 2:
+                    y[1] += 1
+                elif res['lessonDifficulty'] == 3:
+                    y[2] += 1
+                else:
+                    y[3] += 1
+    fig = plt.figure(figsize=(8, 6))
+    plt.bar(x, y)
+    plt.xticks(rotation=90)
+    plt.ylabel('Кол-во просмотренного контента')
+    plt.title('Количество просмотренного контента по Типам Уроков')
+    plt.show()
+
+
 def get_general_statistic(statistics):
     statistic_values = {
         'Average time in queue': 0,
         'Clients amount': 0,
-        'Clients gone': 0
+        'Clients gone': 0,
     }
 
     for i in range(len(statistics)):
@@ -39,7 +81,7 @@ def time_in_queue(statistics):
     ax.scatter(x_user, y_user, c='b')
 
     ax.set_facecolor('white')  # цвет области Axes
-    ax.set_title('Time in queue')  # заголовок для Axes
+    ax.set_title('Время в очереди')  # заголовок для Axes
 
     fig.set_figwidth(8)  # ширина и
     fig.set_figheight(8)
@@ -51,9 +93,11 @@ if __name__ == '__main__':
     statistic_values = get_statistics()
 
     gen_stat = get_general_statistic(statistic_values)
-    print(f'Average time in queue: {gen_stat["Average time in queue"]}\n'
-        f'Clients amount: {gen_stat["Clients amount"]}\n'
-        f'Clients gone: {gen_stat["Clients gone"]}\n'
+    print(f'Среднее время в очереди: {gen_stat["Average time in queue"]}\n'
+        f'Обслуженных клиентов: {gen_stat["Clients amount"]}\n'
+        f'Ушедших клиентов: {gen_stat["Clients gone"]}\n'
     )
 
     time_in_queue(statistic_values)
+    popular_lesson_types(statistic_values)
+    popular_themes(statistic_values)

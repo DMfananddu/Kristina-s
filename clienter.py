@@ -2,6 +2,11 @@ from random import choice, randint
 from contenter import Content
 
 
+MIN_CONT_COUNT = 1
+MAX_CONT_COUNT = 3
+
+
+
 class Client(object):
     """
     Клиент
@@ -33,7 +38,7 @@ class Client(object):
         self.current_subscriptions = []
 
         if content != []:
-            self.sub_list_len = randint(0,3)
+            self.sub_list_len = randint(MIN_CONT_COUNT, MAX_CONT_COUNT)
             tmp_content = []
             while len(tmp_content) != self.sub_list_len:
                 tmp_cont_type = randint(0, 1)
