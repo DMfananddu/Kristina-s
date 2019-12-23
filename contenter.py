@@ -29,10 +29,10 @@ class Content(object):
         
     def __repr__(self):
         ret_str = ''
-        for i in range(manual_count):
+        for i in range(len(self.manual_list)):
             ret_str += f'\n\t{i+1}-й справочник:\n'
             ret_str += f'{self.manual_list[i]}\n'
-        for i in range(course_count):
+        for i in range(len(self.course_list)):
             ret_str += f'\n\t{i+1}-й курс:\n'
             ret_str += f'{self.course_list[i]}\n'
             for j in range(len(self.course_list[i].lessons)):
