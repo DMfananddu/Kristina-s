@@ -22,7 +22,8 @@ def get_general_statistic(statistics):
                     int(statistics[i]['studiedResources'][0]['ST'])
         else:
             statistic_values['Clients gone'] +=1
-    statistic_values['Average time in queue'] //= statistic_values['Clients amount']
+    statistic_values['Average time in queue'] /= statistic_values['Clients amount']
+    statistic_values['Average time in queue'] = round(statistic_values['Average time in queue'], 3)
     return statistic_values
 
 
