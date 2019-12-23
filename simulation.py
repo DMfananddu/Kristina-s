@@ -8,9 +8,9 @@ from random import randint, choice
 
 COURSE_COUNT = 7
 MANUAL_COUNT = 10
-CLIENT_COUNT = 1
-CLIENT_GEN_TIMEOUT = 5
-SERVER_COUNT = 5
+CLIENT_COUNT = 1000
+CLIENT_GEN_TIMEOUT = 1
+SERVER_COUNT = 10
 
 
 class ClientSim(object):
@@ -27,32 +27,40 @@ class ClientSim(object):
             # self.client.statistics['content'] = self.content
             yield req
             yield self.env.process(self.watch_content())
-            print(self.client.statistics)
+            # print(self.client.statistics['studiedResources'])
 
     def watch_content(self):
         tmp_cont = self.choice_content()
         if tmp_cont is not None:
             for cont, ln in tmp_cont:
-                st_time = self.client.StartTime
+                st_time = self.env.now - self.client.statistics['wentToPortal']
+                if st_time<0:
+                    print('23e23e23e')
                 self.chosen_content, lesson_num = cont, ln
                 self.client.statistics['watchedContent'] = True
                 if self.chosen_content.type == 'Course':
                     self.client.statistics['studiedResources'].append({
                         'resource': self.chosen_content,
                         'lessonNumber': lesson_num+1,
+                        'lessonDifficulty': \
+                            self.chosen_content.lessons[lesson_num]['difficulty'],
                         'ST': st_time,
                         'ET': st_time + self.chosen_content.lessons[lesson_num]['duration']
                     })
-                    self.client.StartTime += self.chosen_content.lessons[lesson_num]['duration']
+                    self.client.StartTime += \
+                        self.chosen_content.lessons[lesson_num]['duration'] + \
+                        self.chosen_content.lessons[lesson_num]['difficulty']
                     yield self.env.timeout(self.chosen_content.lessons[lesson_num]['difficulty'])
                 else:
                     self.client.statistics['studiedResources'].append({
                         'resource': self.chosen_content,
                         'lessonNumber': lesson_num,
+                        'lessonDifficulty': self.chosen_content.difficulty,
                         'ST': st_time,
                         'ET': st_time + self.chosen_content.duration
                     })
-                    self.client.StartTime += self.chosen_content.duration
+                    self.client.StartTime += self.chosen_content.duration + \
+                        self.chosen_content.difficulty
                     yield self.env.timeout(self.chosen_content.difficulty)
             self.client.statistics['outOfPortal'] = self.client.StartTime
             

@@ -62,12 +62,15 @@ class Client(object):
             'outOfPortal': None,
             'MPST': self.MPST,
             'content': None,
-            'studiedResources': [{
-                'resource': None,
-                'lessonNumber': None,
-                'ST': None,
-                'ET': None
-            }], # ресурсы, которые были полностью изучены
+            'studiedResources': [
+            #     {
+            #     'resource': None,
+            #     'lessonNumber': None,
+            #     'lessonDifficulty': None,
+            #     'ST': None,
+            #     'ET': None
+            # }
+            ], # ресурсы, которые были полностью изучены
         }
 
     def __repr__(self):
